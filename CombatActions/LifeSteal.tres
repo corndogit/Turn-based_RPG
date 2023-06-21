@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CombatAction" load_steps=2 format=3 uid="uid://b5uh53vp43dpc"]
+
+[ext_resource type="Script" path="res://CombatAction.gd" id="1_ed7q7"]
+
+[resource]
+script = ExtResource("1_ed7q7")
+display_name = "Life Steal"
+damage = 3
+heal = 3
+crit_chance = 0.0

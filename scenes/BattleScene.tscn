@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://dk0g7qkmd8lh2"]
+
+[ext_resource type="PackedScene" uid="uid://da67qi80yqt0b" path="res://scenes/Character.tscn" id="1_2sbug"]
+[ext_resource type="Script" path="res://scenes/TurnManager.gd" id="1_h0gqr"]
+[ext_resource type="Texture2D" uid="uid://c4b4k8djy20un" path="res://assets/sprites/Dragon.png" id="3_7t4ou"]
+[ext_resource type="Resource" uid="uid://dxvf68usxp4qb" path="res://CombatActions/Slash.tres" id="3_xp2vu"]
+[ext_resource type="Resource" uid="uid://cb5qqavge8r2t" path="res://CombatActions/Heal.tres" id="4_0iva6"]
+[ext_resource type="Resource" uid="uid://du15tcvpnaknc" path="res://CombatActions/Stomp.tres" id="5_qeeek"]
+[ext_resource type="Resource" uid="uid://6jconxyl4f20" path="res://CombatActions/Headbutt.tres" id="6_27bb2"]
+[ext_resource type="Resource" uid="uid://b5uh53vp43dpc" path="res://CombatActions/LifeSteal.tres" id="7_xumxc"]
+[ext_resource type="Texture2D" uid="uid://csccp4xhegura" path="res://assets/sprites/Snake.png" id="8_4453c"]
+[ext_resource type="Script" path="res://scenes/CombatActionButton.gd" id="8_n85au"]
+[ext_resource type="Script" path="res://scenes/PlayerUI.gd" id="8_oti7u"]
+
+[node name="BattleScene" type="Node2D" node_paths=PackedStringArray("player_character", "enemy_character")]
+script = ExtResource("1_h0gqr")
+player_character = NodePath("Player")
+enemy_character = NodePath("Enemy")
+
+[node name="Player" parent="." node_paths=PackedStringArray("opponent") instance=ExtResource("1_2sbug")]
+position = Vector2(-200, -50)
+is_player = true
+combat_actions = [ExtResource("3_xp2vu"), ExtResource("4_0iva6"), ExtResource("5_qeeek"), ExtResource("6_27bb2")]
+opponent = NodePath("../Enemy")
+visual = ExtResource("3_7t4ou")
+
+[node name="Enemy" parent="." node_paths=PackedStringArray("opponent") instance=ExtResource("1_2sbug")]
+position = Vector2(200, -50)
+combat_actions = [ExtResource("4_0iva6"), ExtResource("7_xumxc"), ExtResource("3_xp2vu")]
+opponent = NodePath("../Player")
+visual = ExtResource("8_4453c")
+flip_visual = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="PlayerCombatActionsUI" type="VBoxContainer" parent="."]
+offset_left = -288.0
+offset_top = 75.0
+offset_right = -112.0
+offset_bottom = 115.0
+script = ExtResource("8_oti7u")
+buttons = [NodePath("CombatAction"), NodePath("CombatAction2"), NodePath("CombatAction3"), NodePath("CombatAction4")]
+
+[node name="CombatAction" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Empty"
+script = ExtResource("8_n85au")
+
+[node name="CombatAction2" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Empty"
+script = ExtResource("8_n85au")
+
+[node name="CombatAction3" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Empty"
+script = ExtResource("8_n85au")
+
+[node name="CombatAction4" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Empty"
+script = ExtResource("8_n85au")
+
+[node name="TextUI" type="Label" parent="."]
+offset_left = -125.0
+offset_top = -199.0
+offset_right = 126.0
+offset_bottom = -151.0
+text = " "
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="is_dead" from="Player" to="." method="_on_player_is_dead"]
+[connection signal="made_move" from="Player" to="." method="_on_player_made_move"]
+[connection signal="is_dead" from="Enemy" to="." method="_on_enemy_is_dead"]
+[connection signal="made_move" from="Enemy" to="." method="_on_enemy_made_move"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatAction" to="PlayerCombatActionsUI/CombatAction" method="_on_pressed"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatAction2" to="PlayerCombatActionsUI/CombatAction2" method="_on_pressed"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatAction3" to="PlayerCombatActionsUI/CombatAction3" method="_on_pressed"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatAction4" to="PlayerCombatActionsUI/CombatAction4" method="_on_pressed"]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CombatAction" load_steps=2 format=3 uid="uid://du15tcvpnaknc"]
+
+[ext_resource type="Script" path="res://CombatAction.gd" id="1_g7ep2"]
+
+[resource]
+script = ExtResource("1_g7ep2")
+display_name = "Stomp"
+damage = 7
+heal = 0
+crit_chance = 0.05

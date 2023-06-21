@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CombatAction" load_steps=2 format=3 uid="uid://6jconxyl4f20"]
+
+[ext_resource type="Script" path="res://CombatAction.gd" id="1_iynsw"]
+
+[resource]
+script = ExtResource("1_iynsw")
+display_name = "Headbutt"
+damage = 10
+heal = -3
+crit_chance = 0.15
